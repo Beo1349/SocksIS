@@ -51,7 +51,7 @@ public class SpringConfig {
     }
 
     @Bean
-    public Endpoint endpoint1() {
+    public Endpoint endpoint1() { //имена бинов удручают, почему бы их не назвать также как и ссылки на сервисы?
         EndpointImpl endpoint = new EndpointImpl(cxf(), TypeService());
         endpoint.publish("/typeservice");
         return endpoint;

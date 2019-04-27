@@ -18,9 +18,12 @@ public class Socks {
     @Column(name = "size")
     private double size;
 
-    @Column(name = "colour")
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "color")
     @Convert(converter = ColorConverter.class)
-    private Color colour;
+    private Color color;
 
     @ManyToOne
     @JoinColumn(name = "manufacture")
@@ -30,9 +33,9 @@ public class Socks {
     @JoinColumn(name = "type")
     private Type type;
 
-    @OneToMany(cascade = CascadeType.ALL)
+  /*  @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "socks")
-    private List<Composition> composition = new ArrayList<>();
+    private List<Composition> composition = new ArrayList<>();*/
 
     public int getId() {
         return id;
@@ -50,12 +53,12 @@ public class Socks {
         this.size = size;
     }
 
-    public Color getColour() {
-        return colour;
+    public Color getColor() {
+        return color;
     }
 
-    public void setColour(Color colour) {
-        this.colour = colour;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public Manufacture getManufacture() {
@@ -74,6 +77,14 @@ public class Socks {
         this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+/*
     public List<Composition> getComposition() {
         return composition;
     }
@@ -85,5 +96,5 @@ public class Socks {
     public void add(Composition c) {
         composition.add(c);
         c.setSocks(this);
-    }
+    }*/
 }

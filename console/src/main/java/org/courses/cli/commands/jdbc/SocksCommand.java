@@ -32,7 +32,7 @@ public class SocksCommand extends CrudCommand<Socks, Integer> {
         System.out.print("\tcolour: ");
         if (scanner.hasNext()) {
             int color = scanner.nextInt();
-            socks.setColour(new Color(color));
+            socks.setColor(new Color(color));
         }
         System.out.print("\tsize: ");
         if (scanner.hasNext()) {
@@ -67,7 +67,7 @@ public class SocksCommand extends CrudCommand<Socks, Integer> {
                 percentage += percents;
             }
 
-            socks.add(c);
+         //   socks.add(c);
         }
     }
 
@@ -78,7 +78,7 @@ public class SocksCommand extends CrudCommand<Socks, Integer> {
 
     @Override
     protected void print(Socks socks) {
-        System.out.println(String.format(
+   /*     System.out.println(String.format(
                 "\tSocks { id: %d, composition: [ ", socks.getId()
         ));
         for (Composition c : socks.getComposition()) {
@@ -87,6 +87,6 @@ public class SocksCommand extends CrudCommand<Socks, Integer> {
                 c.getId(), c.getPercentage(), c.getMaterial().getId()
             ));
         }
-        System.out.println("\t]}");
+        System.out.println("\t]}"); */
     }
 }

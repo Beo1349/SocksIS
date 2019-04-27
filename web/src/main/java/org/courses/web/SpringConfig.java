@@ -5,15 +5,18 @@ import org.apache.cxf.jaxws.EndpointImpl;
 import org.courses.data.DAO.DAO;
 import org.courses.domain.hbm.Manufacture;
 import org.courses.domain.hbm.Material;
+import org.courses.domain.hbm.Socks;
 import org.courses.domain.hbm.Type;
 import org.courses.web.soap.SoapClasses.ManufactureServiceImpl;
 import org.courses.web.soap.SoapClasses.MaterialServiceImpl;
 import org.courses.web.soap.SoapClasses.TypeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.xml.ws.Endpoint;
 
+@EnableWebMvc
 @Configuration
 @Import(org.courses.data.SpringConfig.class)
 @ImportResource("classpath:META-INF/cxf/cxf.xml")
@@ -24,6 +27,8 @@ public class SpringConfig {
     DAO<Material, Integer> materialDao;
     @Autowired
     DAO<Manufacture, Integer> manufactureDao;
+    @Autowired
+    DAO<Socks, Integer> socksDao;
 
     @Bean
     public SpringBus cxf() {
@@ -64,7 +69,12 @@ public class SpringConfig {
     }
 
     @Bean
-    public org.courses.web.rest.TestService restTestService() {
+    public org.courses.web.rest.SocksService restTestService() {
+        return new org.courses.web.rest.SocksService(socksDao);
+    }
+
+    @Bean
+    public org.courses.web.rest.TestService restTestService1() {
         return new org.courses.web.rest.TestService();
     }
 }

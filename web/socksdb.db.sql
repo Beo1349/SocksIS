@@ -1,8 +1,8 @@
 BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS "Storage" (
 	"id"	INTEGER PRIMARY KEY AUTOINCREMENT,
-	"socks"	INTEGER NOT NULL UNIQUE,
-	"added"	TEXT NOT NULL,
+	"socks"	INTEGER NOT NULL,
+	"added"	TEXT,
 	"retired"	TEXT,
 	"usage"	INTEGER,
 	FOREIGN KEY("socks") REFERENCES "Socks"("id")
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS "Storage" (
 CREATE TABLE IF NOT EXISTS "Socks" (
 	"id"	INTEGER PRIMARY KEY AUTOINCREMENT,
 	"size"	REAL NOT NULL,
-	"colour"	INTEGER NOT NULL,
+	"color"	INTEGER NOT NULL,
 	"type"	INTEGER NOT NULL,
 	"name"	text NOT NULL,
 	"manufacture"	int NOT NULL,
@@ -37,37 +37,36 @@ CREATE TABLE IF NOT EXISTS "Type" (
 	"id"	INTEGER PRIMARY KEY AUTOINCREMENT,
 	"name"	TEXT NOT NULL UNIQUE
 );
-INSERT INTO "Storage" VALUES (1,1,'May 03, 2021','Sep 04, 2019',10);
+INSERT INTO "Storage" VALUES (1,1,'May 03, 2021','Sep 04, 2019',101);
 INSERT INTO "Storage" VALUES (5,2,'Mar 20, 2019','Nov 20, 2020',9);
 INSERT INTO "Storage" VALUES (6,3,'Mar 20, 2019','Sep 03, 2020',9);
-INSERT INTO "Socks" VALUES (1,14.5,255,1,'Носки1',1);
-INSERT INTO "Socks" VALUES (2,15.5,205,2,'Носки2',1);
-INSERT INTO "Socks" VALUES (3,16.5,155,3,'Носки3',1);
-INSERT INTO "Socks" VALUES (4,15.6,255255255,2,'носки4',1);
-INSERT INTO "Socks" VALUES (5,16.4,248,2,'Носки5',3);
-INSERT INTO "Manufacture" VALUES (1,'Житомир');
-INSERT INTO "Manufacture" VALUES (2,'Китай');
-INSERT INTO "Manufacture" VALUES (3,'Жашков');
-INSERT INTO "Material" VALUES (0,'Material');
-INSERT INTO "Material" VALUES (1,'Шерсть');
-INSERT INTO "Material" VALUES (2,'Синтетика');
-INSERT INTO "Material" VALUES (3,'Космопластик');
-INSERT INTO "SocksMaterial" VALUES (7,1,2,100);
-INSERT INTO "SocksMaterial" VALUES (8,1,2,33);
-INSERT INTO "SocksMaterial" VALUES (9,2,1,40);
+INSERT INTO "Storage" VALUES (7,4,'17.04.2019','03.05.2019',11);
+INSERT INTO "Storage" VALUES (8,5,NULL,NULL,NULL);
+INSERT INTO "Storage" VALUES (9,14,NULL,NULL,NULL);
+INSERT INTO "Socks" VALUES (1,14.5,-16776969,1,'socks1',1);
+INSERT INTO "Socks" VALUES (2,15.5,-16777011,2,'socks2',1);
+INSERT INTO "Socks" VALUES (3,16.5,-16777061,3,'socks3',1);
+INSERT INTO "Socks" VALUES (4,15.6,-13180201,2,'socks4',1);
+INSERT INTO "Socks" VALUES (5,16.4,-16774737,2,'socks5',3);
+INSERT INTO "Socks" VALUES (14,15.0,0,1,'socsk6',2);
+INSERT INTO "Manufacture" VALUES (1,'man1');
+INSERT INTO "Manufacture" VALUES (2,'man2');
+INSERT INTO "Manufacture" VALUES (3,'man3');
+INSERT INTO "Material" VALUES (1,'wool');
+INSERT INTO "Material" VALUES (2,'polieaster');
+INSERT INTO "Material" VALUES (3,'syntetic');
 INSERT INTO "SocksMaterial" VALUES (10,2,2,40);
-INSERT INTO "SocksMaterial" VALUES (11,3,1,30);
 INSERT INTO "SocksMaterial" VALUES (12,3,2,60);
 INSERT INTO "SocksMaterial" VALUES (13,3,3,10);
-INSERT INTO "Type" VALUES (177,'Спортивные');
-INSERT INTO "Type" VALUES (178,'Обычные');
-INSERT INTO "Type" VALUES (179,'Теплые');
-CREATE TRIGGER CompositionConstraint
-insert on SocksMaterial
-begin
-select CASE
-when ((new.percentage) > (100 - (select sum(percentage) from SocksMaterial where socks = NEW.socks)))
-then raise(abort, "percentage > 100")
-end;
+INSERT INTO "SocksMaterial" VALUES (21,1,3,30);
+INSERT INTO "SocksMaterial" VALUES (26,4,3,69);
+INSERT INTO "Type" VALUES (1,'warm');
+INSERT INTO "Type" VALUES (2,'casual');
+INSERT INTO "Type" VALUES (3,'sport');
+CREATE TRIGGER trigSocks after INSERT
+on Socks
+BEGIN
+insert into  Storage(socks)  values(NEW.id);
+
 end;
 COMMIT;

@@ -14,7 +14,6 @@ public class ManufactureDao extends BaseDao<Manufacture, Integer> {
         super(factory, Manufacture.class);
     }
 
-
     @Override
     public Collection<Manufacture> find(String filter) {
         Session session = factory.getCurrentSession();

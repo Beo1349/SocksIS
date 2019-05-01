@@ -1,10 +1,7 @@
 package org.courses.data;
 
 import org.courses.data.DAO.DAO;
-import org.courses.data.DAO.hbm.ManufactureDao;
-import org.courses.data.DAO.hbm.MaterialDao;
-import org.courses.data.DAO.hbm.SocksDao;
-import org.courses.data.DAO.hbm.TypeDao;
+import org.courses.data.DAO.hbm.*;
 import org.courses.domain.hbm.*;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +79,10 @@ public class SpringConfig {
         return new MaterialDao(sessionFactory);
     }
 
+      @Bean
+    public DAO<Storage, Integer> storageDao() {
+        return new StorageDao(sessionFactory);
+    }
     @Bean
     public DAO<Manufacture, Integer> manufactureDao() {
         return new ManufactureDao(sessionFactory);
@@ -90,5 +91,8 @@ public class SpringConfig {
     @Bean
     public DAO<Socks, Integer> socksDao() {
         return new SocksDao(sessionFactory);
+    }
+    @Bean DAO<Composition, Integer> compositionDao(){
+        return new CompositionDao(sessionFactory);
     }
 }

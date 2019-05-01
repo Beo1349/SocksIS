@@ -14,15 +14,16 @@ public class Storage {
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "socks")
     private Socks socks;
 
     @Column(name = "added")
-    @Convert(converter = DateConverter.class)
-    private DateTime added;
+    //@Convert(converter = DateConverter.class)
+    private String added;
 
     @Column(name = "retired")
-    @Convert(converter = DateConverter.class)
-    private DateTime retired;
+    //@Convert(converter = DateConverter.class)
+    private String retired;
 
     @Column(name = "usage")
     private Integer usage;
@@ -43,19 +44,19 @@ public class Storage {
         this.socks = socks;
     }
 
-    public DateTime getAdded() {
+    public String getAdded() {
         return added;
     }
 
-    public void setAdded(DateTime added) {
+    public void setAdded(String added) {
         this.added = added;
     }
 
-    public DateTime getRetired() {
+    public String getRetired() {
         return retired;
     }
 
-    public void setRetired(DateTime retired) {
+    public void setRetired(String retired) {
         this.retired = retired;
     }
 

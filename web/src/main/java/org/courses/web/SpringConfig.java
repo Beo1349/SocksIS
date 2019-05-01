@@ -3,10 +3,7 @@ package org.courses.web;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.courses.data.DAO.DAO;
-import org.courses.domain.hbm.Manufacture;
-import org.courses.domain.hbm.Material;
-import org.courses.domain.hbm.Socks;
-import org.courses.domain.hbm.Type;
+import org.courses.domain.hbm.*;
 import org.courses.web.soap.SoapClasses.ManufactureServiceImpl;
 import org.courses.web.soap.SoapClasses.MaterialServiceImpl;
 import org.courses.web.soap.SoapClasses.TypeServiceImpl;
@@ -29,6 +26,10 @@ public class SpringConfig {
     DAO<Manufacture, Integer> manufactureDao;
     @Autowired
     DAO<Socks, Integer> socksDao;
+    @Autowired
+    DAO<Composition, Integer> compositionDao;
+    @Autowired
+    DAO<Storage, Integer> storageDao;
 
     @Bean
     public SpringBus cxf() {
@@ -49,32 +50,36 @@ public class SpringConfig {
     }
 
     @Bean
-    public Endpoint endpoint() {
+    public Endpoint ManufactureEndpoint() {
         EndpointImpl endpoint = new EndpointImpl(cxf(), ManufactureService());
         endpoint.publish("/manufactureservice");
         return endpoint;
     }
 
     @Bean
-    public Endpoint endpoint1() {
+    public Endpoint TypeEndpoint() {
         EndpointImpl endpoint = new EndpointImpl(cxf(), TypeService());
         endpoint.publish("/typeservice");
         return endpoint;
     }
     @Bean
-    public Endpoint endpoint2() {
+    public Endpoint MaterialEndpoint() {
         EndpointImpl endpoint = new EndpointImpl(cxf(), MaterialService());
         endpoint.publish("/materialservice");
         return endpoint;
     }
 
     @Bean
-    public org.courses.web.rest.SocksService restTestService() {
+    public org.courses.web.rest.SocksService restSocksService() {
         return new org.courses.web.rest.SocksService(socksDao);
     }
 
     @Bean
-    public org.courses.web.rest.TestService restTestService1() {
-        return new org.courses.web.rest.TestService();
+    public org.courses.web.rest.CompositionService restCompositionService() {
+        return new org.courses.web.rest.CompositionService(compositionDao);
+    }
+    @Bean
+    public org.courses.web.rest.StorageService restStorageService() {
+        return new org.courses.web.rest.StorageService(storageDao);
     }
 }
